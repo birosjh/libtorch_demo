@@ -11,7 +11,7 @@ int main()
 {
     int batch_size = 16;
 
-    std::filesystem::path datapath = std::filesystem::current_path() / "data/train";
+    std::filesystem::path datapath = std::filesystem::current_path() / "data/images";
 
     std::unordered_map<std::string, int> classes = {
         {"cats", 0},
@@ -28,11 +28,12 @@ int main()
         batch_size
     );
 
-    for (auto& batch : data_loader) {
-        auto data = batch.data;
-        auto labels = batch.target;
+    for (auto& batch : *data_loader) {
+        auto data = batch[0].data;
+        auto labels = batch[0].target;
 
-        std::cout << data << std::endl;
+        std::cout << labels << std::endl;
     }
 
+    return 0
 }
