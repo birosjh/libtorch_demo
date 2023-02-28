@@ -27,4 +27,12 @@ int main()
         std::move(dataset),
         batch_size
     );
+
+    for (auto& batch : data_loader) {
+        auto data = batch.data;
+        auto labels = batch.target;
+
+        std::cout << data << std::endl;
+    }
+
 }
