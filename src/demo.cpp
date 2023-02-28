@@ -9,6 +9,8 @@ using namespace cv;
 
 int main()
 {
+    int batch_size = 16;
+
     std::filesystem::path datapath = std::filesystem::current_path() / "data/train";
 
     std::unordered_map<std::string, int> classes = {
@@ -20,9 +22,9 @@ int main()
 
     PetDataset dataset{path_string, classes};
 
-    auto sample = dataset.get(1);
-
-    std::cout << sample.data << std::endl;
-
-    std::cout << sample.target << std::endl;
+    // Generate a data loader.
+    auto data_loader = torch::data::make_data_loader<torch::data::samplers::SequentialSampler>(
+        std::move(dataset),
+        batch_size
+    );
 }
