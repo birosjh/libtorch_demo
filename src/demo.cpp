@@ -35,5 +35,5 @@ int main()
         std::cout << labels << std::endl;
     }
 
-    return 0
+    return 0;
 }
