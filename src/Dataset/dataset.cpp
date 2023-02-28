@@ -20,7 +20,10 @@ torch::data::Example<> PetDataset::get(size_t index) {
     auto image_file = image_files[index];
 
     std::string delimiter = "/";
-    std::string classname = image_file.substr(0, image_file.find(delimiter));
+    std::string filename = image_file.substr(image_file.find_last_of(delimiter) + 1);
+
+    delimiter = "_";
+    std::string classname = filename.substr(0, filename.find(delimiter));
 
     int label = class_labels[classname];
 
@@ -30,7 +33,7 @@ torch::data::Example<> PetDataset::get(size_t index) {
     image = imread(image_file, 1);
 
     at::Tensor tensor_image = torch::from_blob(image.data, { image.rows, image.cols, 3 }, at::kByte);
-    
+
     return {tensor_image, tensor_label};
 } 
 
